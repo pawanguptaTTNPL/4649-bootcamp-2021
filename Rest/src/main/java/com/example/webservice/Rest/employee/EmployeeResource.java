@@ -1,7 +1,18 @@
 package com.example.webservice.Rest.employee;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+
+
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -16,28 +27,42 @@ public class EmployeeResource {
     private EmployeeService service;
 
     @GetMapping("/Employee")
-    public List<Employee> retrieveAllEmployee()
+    public MappingJacksonValue retrieveAllEmployee()
     {
-        return service.findAll();
+        //return service.findAll();
+        List<Employee> emp=service.findAll();
+        SimpleBeanPropertyFilter filter=SimpleBeanPropertyFilter
+                .filterOutAllExcept("age","name");
+        FilterProvider filters = new SimpleFilterProvider().addFilter("PasswordFilter",filter);
+        MappingJacksonValue mapping=new MappingJacksonValue(emp);
+        mapping.setFilters(filters);
+        return mapping;
+
     }
 
 
     @GetMapping("Employee/{id}")
-    public Employee retrieveEmployee(@PathVariable int id)
+    public EntityModel<Employee> retrieveEmployee(@PathVariable int id)
     {
         Employee emp=service.findOne(id);
         if(emp==null)
             throw new EmployeeNotFound("id-"+id+" NOt Found");
+        //Hateoas
+        //"all-employee",server_path+"/Employees"
+        EntityModel<Employee> resource = EntityModel.of(emp);
+        WebMvcLinkBuilder linkTo =  linkTo(methodOn(this.getClass()).retrieveAllEmployee());
+       
+        resource.add(linkTo.withRel("all-Employee"));
 
-        return emp;
+        return resource;
     }
     @DeleteMapping("Employee/{id}")
-    public void deleteEmployee(@PathVariable int id)
+    public int deleteEmployee(@PathVariable int id)
     {
         Employee emp=service.deleteById(id);
         if(emp==null)
             throw new EmployeeNotFound("id-"+id);
-
+    return id;
     }
 
     @PostMapping("/Employee")

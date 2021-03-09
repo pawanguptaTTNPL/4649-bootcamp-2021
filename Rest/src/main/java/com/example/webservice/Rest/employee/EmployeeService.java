@@ -10,9 +10,9 @@ public class EmployeeService {
     private static List<Employee> employee=new ArrayList<Employee>();
     private static int employeeCount=3;
     static {
-        employee.add(new Employee(1,"Pawan",24));
-        employee.add(new Employee(2,"Shubham",26));
-        employee.add(new Employee(3,"Gaurav",23));
+        employee.add(new Employee(1,"Pawan",24,"1234"));
+        employee.add(new Employee(2,"Shubham",26,"securedpassword"));
+        employee.add(new Employee(3,"Gaurav",23,"ttn"));
     }
     public List<Employee> findAll()
     {
