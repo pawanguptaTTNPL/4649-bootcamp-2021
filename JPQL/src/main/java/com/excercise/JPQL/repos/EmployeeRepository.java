@@ -35,9 +35,20 @@ public interface EmployeeRepository extends CrudRepository<Employee,Integer> {
             "    ORDER BY salary DESC, age")
     List<Object[]>findEmployeeOrderBySalaryAndAge();
 
+    @Query("select avg(salary) from Employee")
+    Integer averageSalary();
     @Modifying
-    @Query("UPDATE Employee e SET e.salary=:salaryval WHERE (select AVG(a.salary)FROM Employee a where Employee)>e.salary")
-    void updateSalaryLessThanAverage(@Param("salaryval")Integer salary);
+    @Query(value = "UPDATE Employee SET salary=:salaryval WHERE salary<:averagesalary")
+    void updateSalaryLessThanAverage(@Param("salaryval")Integer salary,@Param("averagesalary")Integer averagesalary);
+
+    //delete min salary
+    @Query("select min(salary) from Employee")
+    Integer minSalary();
+    @Modifying
+    @Query(value = "Delete FROM Employee WHERE salary=:minsalary")
+    void deleteMinSalary(@Param("minsalary")Integer minsalary);
+
+
 //select pc
 //from PushCampaign pc
 //where pc.creationDate =

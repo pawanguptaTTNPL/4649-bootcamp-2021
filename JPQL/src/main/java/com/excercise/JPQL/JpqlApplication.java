@@ -19,7 +19,8 @@ public class JpqlApplication {
 	//	employeeController.findEmployeeBetweenGivenSalary();
 
 	//	employeeController.findEmployeeOrderBySalaryAndAge();
-	employeeController.updateSalaryLessThanAverage();
+	//employeeController.updateSalaryLessThanAverage();
+		employeeController.deleteMinSalary();
 
 		//native Query
 	//employeeController.findAllEmployeeLikeNQ();

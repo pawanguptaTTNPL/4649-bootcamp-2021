@@ -77,7 +77,7 @@ public class EmployeeController {
     {
         repository.deleteEmployeeByName("Shubham");
     }
-///Excercise
+///Excercise JPQL
 
     public void findEmployeeOrderBySalaryAndAge()
     {
@@ -92,8 +92,19 @@ public class EmployeeController {
     @Transactional
     public void updateSalaryLessThanAverage()
     {
-        repository.updateSalaryLessThanAverage(20000);
+        Integer average = repository.averageSalary();
+        System.out.println(">>>>>>>>>>"+average);
+        repository.updateSalaryLessThanAverage(20000,average);
     }
+
+    @Transactional
+    public void deleteMinSalary()
+    {
+        Integer minSal = repository.minSalary();
+        System.out.println(">>>>>>>>>>"+minSal);
+        repository.deleteMinSalary(minSal);
+    }
+
 
     //Native Query
     public void findAllEmployeeLikeNQ()
