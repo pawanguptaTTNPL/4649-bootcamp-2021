@@ -17,15 +17,22 @@ public class Author {
     private Set<Subject> subjects;
 
 
-    @OneToOne(mappedBy = "author")
-    private Book book;
 
-    public Book getBook() {
-        return book;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="authors_books",
+                joinColumns = @JoinColumn(name="author_id",referencedColumnName = "id"),
+                inverseJoinColumns = @JoinColumn(name="book_id",referencedColumnName = "id"))
+    private Set<Book> books;
+
+//    @OneToOne(mappedBy = "author")
+//    private Book book;
+
+    public Set<Book> getBooks() {
+        return books;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     public Set<Subject> getSubjetcs() {
@@ -45,6 +52,18 @@ public class Author {
 
     public int getId() {
         return id;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public Set<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(Set<Subject> subjects) {
+        this.subjects = subjects;
     }
 
     public String getFirstName() {

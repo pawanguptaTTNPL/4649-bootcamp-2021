@@ -9,6 +9,7 @@ import com.excercise.AssociationExcercise.repos.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 @Service
@@ -51,11 +52,13 @@ public void createRecord()
 
 
 
+    HashSet<Book> books =  new HashSet<Book>();
     Book book=new Book();
-    book.setBookName("Master in hibernet");
-    book.setAuthor(author);
+    book.setBookName("Master IN Java");
+    books.add(book);
 
-    bookRepository.save(book);
+    author.setBooks(books);
+    //bookRepository.save(book);
     repository.save(author);
 }
 
