@@ -5,12 +5,8 @@ import com.excercise.AssociationExcercise.entities.Author;
 import com.excercise.AssociationExcercise.entities.Book;
 import com.excercise.AssociationExcercise.entities.Subject;
 import com.excercise.AssociationExcercise.repos.AuthorRepository;
-import com.excercise.AssociationExcercise.repos.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.Optional;
 
 @Service
 public class AuthorController {
@@ -18,20 +14,18 @@ public class AuthorController {
     @Autowired
    private AuthorRepository repository;
 
-    @Autowired
-    private BookRepository bookRepository;
 
 
 public void createRecord()
 {
     Author author=new Author();
     author.setAge(22);
-    author.setFirstName("Gaurav");
-    author.setLastName("Rawat");
+    author.setFirstName("Shubham");
+    author.setLastName("Pandey");
 
     Address address=new Address();
     address.setStreetNumber(4);
-    address.setLocation("Najafgarh");
+    address.setLocation("Shyam Vihar");
     address.setState("New Delhi");
     author.setAddress(address);
     //Add Subject here
@@ -50,15 +44,25 @@ public void createRecord()
     author.addSubject(subject3);
 
 
+    Book book1=new Book();
+    book1.setBookName("Master in Java");
 
+    Book book2=new Book();
+    book2.setBookName("Master in c++");
 
-    HashSet<Book> books =  new HashSet<Book>();
-    Book book=new Book();
-    book.setBookName("Master IN Java");
-    books.add(book);
+    Book book3=new Book();
+    book3.setBookName("Master in database");
 
-    author.setBooks(books);
-    //bookRepository.save(book);
+    author.addBooks(book1);
+    author.addBooks(book2);
+    author.addBooks(book3);
+//    HashSet<Book> books =  new HashSet<Book>();
+//    Book book=new Book();
+//    book.setBookName("Master IN Java");
+//    books.add(book);
+
+   // author.setBooks(books);
+
     repository.save(author);
 }
 

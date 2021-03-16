@@ -16,17 +16,8 @@ public class Author {
     @OneToMany(mappedBy = "author",cascade =CascadeType.ALL)//table name(entity)
     private Set<Subject> subjects;
 
-
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="authors_books",
-                joinColumns = @JoinColumn(name="author_id",referencedColumnName = "id"),
-                inverseJoinColumns = @JoinColumn(name="book_id",referencedColumnName = "id"))
+    @OneToMany(mappedBy = "author",cascade =CascadeType.ALL)
     private Set<Book> books;
-
-//    @OneToOne(mappedBy = "author")
-//    private Book book;
-
     public Set<Book> getBooks() {
         return books;
     }
@@ -34,6 +25,19 @@ public class Author {
     public void setBooks(Set<Book> books) {
         this.books = books;
     }
+
+
+
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name="authors_books",
+//                joinColumns = @JoinColumn(name="author_id",referencedColumnName = "id"),
+//                inverseJoinColumns = @JoinColumn(name="book_id",referencedColumnName = "id"))
+//    private Set<Book> books;
+
+//    @OneToOne(mappedBy = "author")
+//    private Book book;
+
+
 
     public Set<Subject> getSubjetcs() {
         return subjects;
@@ -101,6 +105,15 @@ public class Author {
                 subjects=new HashSet<>();
             subject.setAuthor(this);
             subjects.add(subject);
+        }
+    }
+    public void addBooks(Book book)
+    {
+        if(book!=null){
+            if(books==null)
+                books=new HashSet<>();
+            book.setAuthor(this);
+            books.add(book);
         }
     }
 

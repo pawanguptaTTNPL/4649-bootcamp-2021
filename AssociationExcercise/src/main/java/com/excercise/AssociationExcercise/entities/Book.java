@@ -9,8 +9,20 @@ public class Book {
     private int id;
     private String bookName;
 
-    @ManyToMany(mappedBy = "books")
-    private Set<Author> authors;
+//    @ManyToMany(mappedBy = "books")
+//    private Set<Author> authors;private Author author;
+
+        @ManyToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name="author_id")
+        private Author author;
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
 
     public int getId() {
         return id;
@@ -22,22 +34,9 @@ public class Book {
 
 
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", bookName='" + bookName + '\'' +
-                ", authors=" + authors +
-                '}';
-    }
 
-    public Set<Author> getAuthors() {
-        return authors;
-    }
 
-    public void setAuthors(Set<Author> authors) {
-        this.authors = authors;
-    }
+
     //    @OneToOne(cascade=CascadeType.ALL)
 //    @JoinColumn(name = "author_id")
 //    private Author author;
